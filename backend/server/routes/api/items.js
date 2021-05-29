@@ -5,13 +5,13 @@ const router = express.Router();
 
 // Get items
 router.get('/', async (req, res) => {
-  const items = await loadPostsCollection();
+  const items = await loadItemsCollection();
   res.send(await items.find({}).toArray());
 });
 
 // Add item
 router.post('/', async (req, res) => {
-  const items = await loadPostsCollection();
+  const items = await loadItemsCollection();
   await items.insertOne({
     text: req.body.text,
     createdAt: new Date()
@@ -21,12 +21,12 @@ router.post('/', async (req, res) => {
 
 // Delete item
 router.delete('/:id', async (req, res) => {
-  const items = await loadPostsCollection();
+  const items = await loadItemsCollection();
   await items.deleteOne({ _id: new mongodb.ObjectID(req.params.id) });
   res.status(200).send({});
 });
 
-async function loadPostsCollection() {
+async function loadItemsCollection() {
   const client = await mongodb.MongoClient.connect(
     'mongodb+srv://admin:admin@cluster0.gcpyf.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
     {
