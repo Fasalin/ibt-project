@@ -7,6 +7,7 @@
 5. npm install
 6. npm run serve
 7. Open new terminal (get to the backend folder)
-8. npm run start
+8. npm run start (open browser on localhost 8080)
+9. If backend does not run - IP should be added to mongo whitelist.
 
 Now you have both frontend and backend servers running.

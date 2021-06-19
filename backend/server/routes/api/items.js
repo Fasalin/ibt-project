@@ -28,7 +28,7 @@ router.delete('/:id', async (req, res) => {
 
 async function loadItemsCollection() {
   const client = await mongodb.MongoClient.connect(
-    'mongodb+srv://admin:admin@cluster0.gcpyf.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
+    'mongodb+srv://admin:admin@cluster0.gcpyf.mongodb.net/items?retryWrites=true&w=majority',
     {
       useNewUrlParser: true,
       useUnifiedTopology: true

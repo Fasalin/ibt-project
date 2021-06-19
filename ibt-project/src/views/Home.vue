@@ -3,100 +3,30 @@
     <h1 class="main-title">Garage Mania</h1>
     <div>{{ cars }}</div>
     <div class="card-wrapper">
-      <div class="card">
-        <div class="card-border">
-          <img
-            src="https://hips.hearstapps.com/hmg-prod/amv-prod-cad-assets/images/14q3/612023/2015-mercedes-amg-c63-c63-s-photos-and-info-news-car-and-driver-photo-635281-s-original.jpg?fill=2:1&resize=480:*"
-            alt="image"
-          />
-
-          <h5 class="card-title">Car Name</h5>
-          <p class="card-description">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem
-            maxime similique cum porro temporibus aspernatur!
-          </p>
-          <p class="card-price">Price: 50$</p>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-border">
-          <img
-            src="https://hips.hearstapps.com/hmg-prod/amv-prod-cad-assets/images/14q3/612023/2015-mercedes-amg-c63-c63-s-photos-and-info-news-car-and-driver-photo-635281-s-original.jpg?fill=2:1&resize=480:*"
-            alt="image"
-          />
-
-          <h5 class="card-title">Car Name</h5>
-          <p class="card-description">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem
-            maxime similique cum porro temporibus aspernatur!
-          </p>
-          <p class="card-price">Price: 50$</p>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-border">
-          <img
-            src="https://hips.hearstapps.com/hmg-prod/amv-prod-cad-assets/images/14q3/612023/2015-mercedes-amg-c63-c63-s-photos-and-info-news-car-and-driver-photo-635281-s-original.jpg?fill=2:1&resize=480:*"
-            alt="image"
-          />
-
-          <h5 class="card-title">Car Name</h5>
-          <p class="card-description">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem
-            maxime similique cum porro temporibus aspernatur!
-          </p>
-          <p class="card-price">Price: 50$</p>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-border">
-          <img
-            src="https://hips.hearstapps.com/hmg-prod/amv-prod-cad-assets/images/14q3/612023/2015-mercedes-amg-c63-c63-s-photos-and-info-news-car-and-driver-photo-635281-s-original.jpg?fill=2:1&resize=480:*"
-            alt="image"
-          />
-
-          <h5 class="card-title">Car Name</h5>
-          <p class="card-description">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem
-            maxime similique cum porro temporibus aspernatur!
-          </p>
-          <p class="card-price">Price: 50000$</p>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-border">
-          <img
-            src="https://hips.hearstapps.com/hmg-prod/amv-prod-cad-assets/images/14q3/612023/2015-mercedes-amg-c63-c63-s-photos-and-info-news-car-and-driver-photo-635281-s-original.jpg?fill=2:1&resize=480:*"
-            alt="image"
-          />
-
-          <h5 class="card-title">Car Name</h5>
-          <p class="card-description">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem
-            maxime similique cum porro temporibus aspernatur!
-          </p>
-          <p class="card-price">Price: 50$</p>
-        </div>
-      </div>
+      <Card car-photo="xx" car-name="xx" car-description="xx" car-price="xx"/>  
+      <Card car-photo="xx" car-name="xx" car-description="xx" car-price="xx"/>  
     </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import Card from "@/components/Card.vue"
 export default {
   name: "Home",
-  components: {},
-  data () {
+  components: {Card},
+  data() {
     return {
-      cars: null
-    }
+      cars: null,
+    };
   },
   mounted() {
     axios.get('http://localhost:3000/api/items').then(resp => {
       this.cars = resp
+    }).catch(err => {
+      console.log(err)
     })
-  }
+  },
 };
 </script>
 
@@ -148,10 +78,9 @@ export default {
 .card-price {
   font-size: large;
 }
-.main-title{
-    margin: 0 auto;
-    display: flex;
-    margin-bottom: 1.5rem;
+.main-title {
+  margin: 0 auto;
+  display: flex;
+  margin-bottom: 1.5rem;
 }
-
 </style>
