@@ -1,10 +1,8 @@
 <template>
   <div class="main-container">
     <h1 class="main-title">Garage Mania</h1>
-    <div>{{ cars }}</div>
     <div class="card-wrapper">
-      <Card car-photo="xx" car-name="xx" car-description="xx" car-price="xx"/>  
-      <Card car-photo="xx" car-name="xx" car-description="xx" car-price="xx"/>  
+      <Card v-for="car in cars" :key="car.id" :car-photo="car.img" :car-name="car.name" :car-description="car.shortDesc" :car-price="car.price"/>  
     </div>
   </div>
 </template>
@@ -22,7 +20,7 @@ export default {
   },
   mounted() {
     axios.get('http://localhost:3000/api/items').then(resp => {
-      this.cars = resp
+      this.cars = resp.data 
     }).catch(err => {
       console.log(err)
     })
