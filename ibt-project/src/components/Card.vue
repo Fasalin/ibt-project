@@ -1,32 +1,40 @@
 <template>
   <div class="card">
     <div class="card-border">
-      <img
-        :src="carPhoto"
-        alt="image"
-      />
+      <img :src="carPhoto" alt="image" />
 
       <h5 class="card-title">{{ carName }}</h5>
       <p class="card-description">
-        {{carDescription}}
+        {{ carDescription }}
       </p>
-      <p class="card-price">Price: {{carPrice}}$</p>
+      <p class="card-price">Price: {{ carPrice }}$</p>
+      <router-link
+        class="btn"
+        :to="{
+          name: 'Details',
+          params: {
+            carPhoto,
+            carName,
+            carDescription,
+            carPrice,
+          },
+        }"
+        >More details</router-link
+      >
     </div>
   </div>
 </template>
 
 <script>
 export default {
-    props:["carName","carDescription", "carPrice", "carPhoto"],
-    data() {
-        return {
-            
-        }
-    },
-    mounted() {
-      console.log(this.carPhoto)
-    }
-}
+  props: ["carName", "carDescription", "carPrice", "carPhoto"],
+  data() {
+    return {};
+  },
+  mounted() {
+    console.log(this.carPhoto);
+  },
+};
 </script>
 
 
@@ -83,5 +91,13 @@ export default {
   margin: 0 auto;
   display: flex;
   margin-bottom: 1.5rem;
+}
+.btn {
+  background-color: #fcdb86;
+  padding: 0.5rem;
+  margin-top: 1rem;
+}
+.btn:hover{
+  background-color: rgb(111, 176, 219);
 }
 </style>

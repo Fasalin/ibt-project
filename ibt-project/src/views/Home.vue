@@ -2,28 +2,38 @@
   <div class="main-container">
     <h1 class="main-title">Garage Mania</h1>
     <div class="card-wrapper">
-      <Card v-for="car in cars" :key="car.id" :car-photo="car.img" :car-name="car.name" :car-description="car.shortDesc" :car-price="car.price"/>  
+      <Card
+        v-for="car in cars"
+        :key="car.id"
+        :car-photo="car.img"
+        :car-name="car.name"
+        :car-description="car.shortDesc"
+        :car-price="car.price"
+      />
     </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import Card from "@/components/Card.vue"
+import Card from "@/components/Card.vue";
 export default {
   name: "Home",
-  components: {Card},
+  components: { Card },
   data() {
     return {
       cars: null,
     };
   },
   mounted() {
-    axios.get('http://localhost:3000/api/items').then(resp => {
-      this.cars = resp.data 
-    }).catch(err => {
-      console.log(err)
-    })
+    axios
+      .get("http://localhost:3000/api/items")
+      .then((resp) => {
+        this.cars = resp.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
 };
 </script>
@@ -46,6 +56,11 @@ export default {
   width: 26%;
   margin-bottom: 3rem;
   background-color: whitesmoke;
+}
+
+.card-a {
+  width: 100%;
+  height: 100%;
 }
 
 .card:hover {
