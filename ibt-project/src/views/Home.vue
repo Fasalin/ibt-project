@@ -4,11 +4,12 @@
     <div class="card-wrapper">
       <Card
         v-for="car in cars"
-        :key="car.id"
+        :key="car.name"
         :car-photo="car.img"
         :car-name="car.name"
         :car-description="car.shortDesc"
         :car-price="car.price"
+        :car-id="car.name"
       />
     </div>
   </div>

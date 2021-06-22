@@ -13,6 +13,7 @@
         :to="{
           name: 'Details',
           params: {
+            id: carId,
             carPhoto,
             carName,
             carDescription,
@@ -27,12 +28,9 @@
 
 <script>
 export default {
-  props: ["carName", "carDescription", "carPrice", "carPhoto"],
+  props: ["carName", "carDescription", "carPrice", "carPhoto", "carId"],
   data() {
     return {};
-  },
-  mounted() {
-    console.log(this.carPhoto);
   },
 };
 </script>
