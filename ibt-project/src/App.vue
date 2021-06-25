@@ -4,7 +4,10 @@
       <div class="nav-wrapper">
         <router-link class="nav-home-button" to="/">Home</router-link>
         <div class="nav-right-side-buttons">
-          <router-link to="/">Cart</router-link>
+          <router-link :to="{
+            name: 'Create'
+          }"
+          >Create</router-link>
           <router-link class="nav-profile-button" to="/">Profile</router-link>
         </div>
       </div>

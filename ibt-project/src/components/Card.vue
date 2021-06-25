@@ -18,6 +18,7 @@
             carName,
             carDescription,
             carPrice,
+            bought,
           },
         }"
         >More details</router-link
@@ -28,10 +29,17 @@
 
 <script>
 export default {
-  props: ["carName", "carDescription", "carPrice", "carPhoto", "carId"],
+  props: {
+    carId: String,
+    carName: String,
+    carDescription: String,
+    carPrice: String,
+    carPhoto: String,
+    bought: Boolean,
+  },
   data() {
     return {};
-  },
+  }
 };
 </script>
 
@@ -95,7 +103,7 @@ export default {
   padding: 0.5rem;
   margin-top: 1rem;
 }
-.btn:hover{
+.btn:hover {
   background-color: rgb(111, 176, 219);
 }
 </style>

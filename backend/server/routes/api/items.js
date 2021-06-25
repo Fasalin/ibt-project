@@ -1,3 +1,4 @@
+const { request } = require('express');
 const express = require('express');
 const mongodb = require('mongodb');
 
@@ -6,6 +7,7 @@ const router = express.Router();
 // Get items
 router.get('/', async (req, res) => {
   const items = await loadItemsCollection();
+  console.log(items)
   res.send(await items.find({}).toArray());
 });
 
@@ -16,6 +18,15 @@ router.post('/', async (req, res) => {
     text: req.body.text,
     createdAt: new Date()
   });
+  res.status(201).send();
+});
+
+//Buyout item
+router.patch('/buy', async (req, res) => {
+  const items = await loadItemsCollection();
+  console.log(req.body);
+  let updateObj = {bought: true}
+  //items.updateOne({ _id: ObjectId(req.params.id)}, {$set: updateObj});
   res.status(201).send();
 });
 
@@ -39,3 +50,4 @@ async function loadItemsCollection() {
 }
 
 module.exports = router;
+

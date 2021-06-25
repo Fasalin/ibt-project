@@ -3,13 +3,14 @@
     <h1 class="main-title">Garage Mania</h1>
     <div class="card-wrapper">
       <Card
-        v-for="car in cars"
-        :key="car.name"
+        v-for="(car, i) in cars"
+        :key="car._id"
+        :car-id="car._id"
         :car-photo="car.img"
         :car-name="car.name"
         :car-description="car.shortDesc"
         :car-price="car.price"
-        :car-id="car.name"
+        :bought=car.bought
       />
     </div>
   </div>
@@ -23,19 +24,19 @@ export default {
   components: { Card },
   data() {
     return {
-      cars: null,
+      cars: null
     };
   },
   mounted() {
     axios
-      .get("http://localhost:3000/api/items")
+      .get("http://localhost:3000/")
       .then((resp) => {
-        this.cars = resp.data;
+        this.cars = resp.data
       })
       .catch((err) => {
         console.log(err);
       });
-  },
+  }
 };
 </script>
 
