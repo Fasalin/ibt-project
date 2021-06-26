@@ -7,13 +7,15 @@
       <div class="details-car-price">Price: {{ carPrice }} $</div>
     </div>
 
-    <div class="checkout-section">
+    <div v-if="!buyerName" class="checkout-section">
       <form action="">
-        <input placeholder="Name" type="text" />
-        <input placeholder="Address" type="text" />
+        <input v-model="name" placeholder="Name" type="text" />
+        <input v-model="address" placeholder="Address" type="text" />
       </form>
-      <button v-if="!buyerName" @click="buyout" class="send-btn">Purchase this car</button>
-      <p v-else>Car has already been bought by {{buyerName}}</p>
+      <button v-if="!buyerName" @click="buyout" class="send-btn">
+        Purchase this car
+      </button>
+      <p v-else>Car has already been bought by {{ buyerName }}</p>
     </div>
     <div class="create-review-section">
       <form action="">
@@ -54,22 +56,19 @@ export default {
       username: null,
       text: null,
       stars: null,
+      name: "",
+      address: "",
     };
   },
-  props: ["carName", "carLongDescription", "carPrice", "carPhoto", "buyerName", "buyerAddress"],
+  props: [
+    "carName",
+    "carLongDescription",
+    "carPrice",
+    "carPhoto",
+    "buyerName",
+    "buyerAddress",
+  ],
 
-  methods: {
-    buyout() {
-      axios
-        .patch(`http://localhost:3000/buy/`, { carName: this.carName })
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
-  },
   created() {
     this.getReviews();
   },
@@ -101,9 +100,23 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+      // this.username = "";
+      // this.text = "";
     },
     buyout() {
-      //console.log(JSON.stringify(this.bought))
+      alert(`Congratulations, ${this.name}! Thank you for the purchase. `);
+      axios
+        .patch(`http://localhost:3000/buy/`, {
+          buyerName: this.name,
+          buyerAddress: this.address,
+          carName: this.carName,
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
 };

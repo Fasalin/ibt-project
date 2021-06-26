@@ -65,7 +65,8 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true }, (err, client
       { name: req.body.carName },
       {
         $set: {
-          bought: true
+          buyerName: req.body.buyerName,
+          buyerAddress: req.body.buyerAddress
         }
       }
     ).then(result => console.log(result))
