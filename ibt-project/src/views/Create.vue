@@ -2,12 +2,12 @@
   <div class="wrapper">
     <form class="form-wrapper">
       <input v-model="carModel" placeholder="Car model" type="text" />
+      <input v-model="carPrice" placeholder="Car price" type="text" />
       <input
-        v-model="carDescription"
-        placeholder="Car description"
+        v-model="carLongDescription"
+        placeholder="Car specifications (Long description)"
         type="text"
       />
-      <input v-model="carPrice" placeholder="Car price" type="text" />
       <input v-model="carImage" placeholder="Car image url" type="text" />
     </form>
     <button @click="sendData">Create</button>
@@ -21,6 +21,7 @@ export default {
     return {
       carModel: null,
       carDescription: null,
+      carLongDescription: null,
       carPrice: null,
       carImage: null,
     };
@@ -29,11 +30,12 @@ export default {
     sendData() {
       axios
         .post(`http://localhost:3000/create`, {
-          carModel: this.carModel,
-          carDescription: this.carDescription,
-          carPrice: this.carPrice,
-          carImage: this.carImage,
-          bought: false
+          name: this.carModel,
+          shortDesc: this.carDescription,
+          longDesc: this.carLongDescription,
+          price: this.carPrice,
+          img: this.carImage,
+          bought: false,
         })
         .then((res) => {
           console.log(res);

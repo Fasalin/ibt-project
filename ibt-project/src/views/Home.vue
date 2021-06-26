@@ -1,6 +1,6 @@
 <template>
   <div class="main-container">
-    <h1 class="main-title">Garage Mania</h1>
+    <h1 class="main-title">The Garage</h1>
     <div class="card-wrapper">
       <Card
         v-for="(car, i) in cars"
@@ -8,7 +8,7 @@
         :car-id="car._id"
         :car-photo="car.img"
         :car-name="car.name"
-        :car-description="car.shortDesc"
+        :car-long-description="car.longDesc"
         :car-price="car.price"
         :bought=car.bought
       />

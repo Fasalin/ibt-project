@@ -80,12 +80,21 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true }, (err, client
       .catch(error => console.error(error))
   })
   app.get('/get-reviews', (req, res) => {
+    //console.log(req.query)
     reviewsCollection.find(
-      { name: req.body.carName },
+      { carName: req.query.carName },
     ).toArray()
       .then(results => {
         res.send(results)
+        //console.log("x")
       })
+      .catch(error => console.error(error))
+  })
+  app.post('/create-review', (req, res) => {
+    reviewsCollection.insertOne(
+      req.body
+    )
+      .then(result => console.log(result))
       .catch(error => console.error(error))
   })
 

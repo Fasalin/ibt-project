@@ -5,7 +5,7 @@
 
       <h5 class="card-title">{{ carName }}</h5>
       <p class="card-description">
-        {{ carDescription }}
+        {{ carLongDescription.slice(0, 150) }}
       </p>
       <p class="card-price">Price: {{ carPrice }}$</p>
       <router-link
@@ -16,7 +16,7 @@
             id: carId,
             carPhoto,
             carName,
-            carDescription,
+            carLongDescription,
             carPrice,
             bought,
           },
@@ -32,7 +32,7 @@ export default {
   props: {
     carId: String,
     carName: String,
-    carDescription: String,
+    carLongDescription: String,
     carPrice: String,
     carPhoto: String,
     bought: Boolean,

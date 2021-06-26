@@ -2,27 +2,46 @@
   <div class="details-container">
     <div class="information-section">
       <div class="details-car-name">Car model: {{ carName }}</div>
-      <div class="details-car-description">
-        Description: {{ carDescription }}
-      </div>
-      <div>{{ bought }}</div>
+      <img class="details-car-photo" :src="carPhoto" alt="image" />
+      <div class="details-car-long-description">{{ carLongDescription }}</div>
       <div class="details-car-price">Price: {{ carPrice }} $</div>
-      <img class="details-car-photo" :src="carPhoto" alt="photo" />
     </div>
 
     <div class="checkout-section">
       <form action="">
-        <input type="text" />
-        <input type="text" />
+        <input placeholder="Name" type="text" />
+        <input placeholder="Address" type="text" />
       </form>
       <button v-if="bought !== 'true'" @click="buyout" class="send-btn">
         Buy
       </button>
-      <button v-else>Car has already been bought.</button>
+      <button class="send-btn" v-else>Car has already been bought.</button>
+    </div>
+    <div class="create-review-section">
+      <form action="">
+        <input v-model="username" placeholder="Your Name" type="text" />
+        <input v-model="text" placeholder="Review" type="text" />
+        <input
+          v-model="stars"
+          placeholder="Stars"
+          type="number"
+          min="1"
+          max="5"
+        />
+      </form>
+      <button @click="sendReview">Send review</button>
     </div>
     <div class="review-section">
-      <div class="review">
-        {{reviews}}
+      <div v-for="review in reviews" :key="review.carName" class="review">
+        <div>
+          {{ review.text }}
+        </div>
+        <div>
+          {{ review.username }}
+        </div>
+        <div>
+          {{ review.stars }}
+        </div>
       </div>
     </div>
   </div>
@@ -31,14 +50,17 @@
 <script>
 import axios from "axios";
 export default {
-  data(){
+  data() {
     return {
-      reveiws: null
-    }
+      reviews: null,
+      username: null,
+      text: null,
+      stars: null,
+    };
   },
   props: {
     carName: String,
-    carDescription: String,
+    carLongDescription: String,
     carPrice: String,
     carPhoto: String,
     bought: String,
@@ -55,16 +77,39 @@ export default {
         });
     },
   },
-  mounted() {
-    axios
-      .get(`http://localhost:3000/get-reviews/`, { carName: this.carName })
-      .then((res) => {
-        this.reviews=res.data
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  created() {
+    //console.log(this.carName)
+    this.getReviews();
+  },
+  methods: {
+    getReviews() {
+      axios
+        .get(`http://localhost:3000/get-reviews/`, {
+          params: { carName: this.carName },
+        })
+        .then((res) => {
+          this.reviews = res.data;
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    sendReview() {
+      axios
+        .post(`http://localhost:3000/create-review/`, {
+          username: this.username,
+          text: this.text,
+          stars: this.stars,
+          carName: this.carName
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
   },
 };
 </script>
