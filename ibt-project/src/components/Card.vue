@@ -18,7 +18,8 @@
             carName,
             carLongDescription,
             carPrice,
-            bought,
+            buyerAddress,
+            buyerName
           },
         }"
         >More details</router-link
@@ -29,17 +30,18 @@
 
 <script>
 export default {
-  props: {
-    carId: String,
-    carName: String,
-    carLongDescription: String,
-    carPrice: String,
-    carPhoto: String,
-    bought: Boolean,
-  },
+  props: [
+    "carId",
+    "carName",
+    "carLongDescription",
+    "carPrice",
+    "carPhoto",
+    "buyerName",
+    "buyerAddress"
+  ],
   data() {
     return {};
-  }
+  },
 };
 </script>
 

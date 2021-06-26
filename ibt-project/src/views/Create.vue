@@ -24,6 +24,8 @@ export default {
       carLongDescription: null,
       carPrice: null,
       carImage: null,
+      buyerAddress: "",
+      buyerName: ""
     };
   },
   methods: {
@@ -35,7 +37,8 @@ export default {
           longDesc: this.carLongDescription,
           price: this.carPrice,
           img: this.carImage,
-          bought: false,
+          buyerAddress,
+          buyerName
         })
         .then((res) => {
           console.log(res);

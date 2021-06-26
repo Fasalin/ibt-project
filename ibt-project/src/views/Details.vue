@@ -12,10 +12,8 @@
         <input placeholder="Name" type="text" />
         <input placeholder="Address" type="text" />
       </form>
-      <button v-if="bought !== 'true'" @click="buyout" class="send-btn">
-        Buy
-      </button>
-      <button class="send-btn" v-else>Car has already been bought.</button>
+      <button v-if="!buyerName" @click="buyout" class="send-btn">Purchase this car</button>
+      <p v-else>Car has already been bought by {{buyerName}}</p>
     </div>
     <div class="create-review-section">
       <form action="">
@@ -58,13 +56,8 @@ export default {
       stars: null,
     };
   },
-  props: {
-    carName: String,
-    carLongDescription: String,
-    carPrice: String,
-    carPhoto: String,
-    bought: String,
-  },
+  props: ["carName", "carLongDescription", "carPrice", "carPhoto", "buyerName", "buyerAddress"],
+
   methods: {
     buyout() {
       axios
@@ -78,7 +71,6 @@ export default {
     },
   },
   created() {
-    //console.log(this.carName)
     this.getReviews();
   },
   methods: {
@@ -101,7 +93,7 @@ export default {
           username: this.username,
           text: this.text,
           stars: this.stars,
-          carName: this.carName
+          carName: this.carName,
         })
         .then((res) => {
           console.log(res);
@@ -109,6 +101,9 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+    },
+    buyout() {
+      //console.log(JSON.stringify(this.bought))
     },
   },
 };

@@ -10,7 +10,8 @@
         :car-name="car.name"
         :car-long-description="car.longDesc"
         :car-price="car.price"
-        :bought=car.bought
+        :buyerName="car.buyerName"
+        :buyerAddress="car.buyerAddress"
       />
     </div>
   </div>
