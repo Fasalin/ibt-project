@@ -69,7 +69,7 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true }, (err, client
           buyerAddress: req.body.buyerAddress
         }
       }
-    ).then(result => console.log(result))
+    ).then(result => { res.send(buyerName) })
       .catch(error => console.error(error))
   })
 
@@ -96,6 +96,15 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true }, (err, client
       req.body
     )
       .then(result => console.log(result))
+      .catch(error => console.error(error))
+  })
+  app.get('/get-bought-cars', (req, res) => {
+    carsCollection.find({
+      buyerName: { $regex: "[A-Za-z0-9]" }
+    }).toArray()
+      .then(results => {
+        res.send(results)
+      })
       .catch(error => console.error(error))
   })
 

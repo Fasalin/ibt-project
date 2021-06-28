@@ -19,9 +19,20 @@
     </div>
     <div class="create-review-section">
       <form action="">
-        <input v-model="username" placeholder="Your Name" type="text" />
-        <input v-model="text" placeholder="Review" type="text" />
         <input
+          id="username-input"
+          v-model="username"
+          placeholder="Your Name"
+          type="text"
+        />
+        <input
+          id="review-input"
+          v-model="text"
+          placeholder="Review"
+          type="text"
+        />
+        <input
+          id="stars-input"
           v-model="stars"
           placeholder="Stars"
           type="number"
@@ -32,7 +43,11 @@
       <button @click="sendReview">Send review</button>
     </div>
     <div class="review-section">
-      <div v-for="review in reviews" :key="review.carName" class="review">
+      <div
+        v-for="review in reviews.slice().reverse()"
+        :key="review.carName"
+        class="review"
+      >
         <div>
           {{ review.text }}
         </div>
@@ -58,6 +73,7 @@ export default {
       stars: null,
       name: "",
       address: "",
+      newBuyerName: null,
     };
   },
   props: [
@@ -87,21 +103,29 @@ export default {
         });
     },
     sendReview() {
-      axios
-        .post(`http://localhost:3000/create-review/`, {
-          username: this.username,
-          text: this.text,
-          stars: this.stars,
-          carName: this.carName,
-        })
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      // this.username = "";
-      // this.text = "";
+      if (this.username && this.text && this.stars) {
+        axios
+          .post(`http://localhost:3000/create-review/`, {
+            username: this.username,
+            text: this.text,
+            stars: this.stars,
+            carName: this.carName,
+          })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        this.username = null;
+        this.text = null;
+        this.stars = null;
+        setTimeout(() => {
+          this.getReviews();
+        }, 400);
+      } else {
+        alert("Please fill all fields!");
+      }
     },
     buyout() {
       alert(`Congratulations, ${this.name}! Thank you for the purchase. `);
@@ -117,6 +141,7 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+      this.newBuyerName = this.name;
     },
   },
 };
