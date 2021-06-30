@@ -62,7 +62,7 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true }, (err, client
 
   app.patch('/buy', (req, res) => {
     carsCollection.findOneAndUpdate(
-      { name: req.body.carName },
+      { carName: req.body.carName },
       {
         $set: {
           buyerName: req.body.buyerName,
@@ -106,6 +106,20 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true }, (err, client
         res.send(results)
       })
       .catch(error => console.error(error))
+  })
+  app.delete('/delete-car', (req, res) => {
+    console.log(req.query)
+    carsCollection.findOneAndDelete(
+      {
+        carName: req.query.carName
+      }
+    )
+      .then(results => {
+        console.log(results)
+        res.redirect('/')
+      })
+      .catch(error => console.error(error))
+
   })
 
 })

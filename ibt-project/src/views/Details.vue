@@ -17,6 +17,8 @@
       </button>
       <p v-else>Car has already been bought by {{ buyerName }}</p>
     </div>
+    <button @click="deleteCar">Delete</button>
+
     <div class="create-review-section">
       <form action="">
         <input
@@ -43,11 +45,7 @@
       <button @click="sendReview">Send review</button>
     </div>
     <div class="review-section">
-      <div
-        v-for="review in reviews.slice().reverse()"
-        :key="review.carName"
-        class="review"
-      >
+      <div v-for="review in reviews" :key="review.carName" class="review">
         <div>
           {{ review.text }}
         </div>
@@ -77,6 +75,7 @@ export default {
     };
   },
   props: [
+    "carId",
     "carName",
     "carLongDescription",
     "carPrice",
@@ -142,6 +141,21 @@ export default {
           console.log(err);
         });
       this.newBuyerName = this.name;
+    },
+    deleteCar() {
+      axios
+        .delete(`http://localhost:3000/delete-car/`, {
+          params: { carName: this.carName },
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      setTimeout(() => {
+        this.$router.push("/");
+      }, 500);
     },
   },
 };

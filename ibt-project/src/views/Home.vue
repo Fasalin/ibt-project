@@ -7,7 +7,7 @@
         :key="car._id"
         :car-id="car._id"
         :car-photo="car.img"
-        :car-name="car.name"
+        :car-name="car.carName"
         :car-long-description="car.longDesc"
         :car-price="car.price"
         :buyerName="car.buyerName"

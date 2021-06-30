@@ -10,7 +10,7 @@
       />
       <input v-model="carImage" placeholder="Car image url" type="text" />
     </form>
-    <button @click="sendData">Create</button>
+    <button class="button-create" @click="sendData">Create</button>
   </div>
 </template>
 
@@ -25,20 +25,19 @@ export default {
       carPrice: null,
       carImage: null,
       buyerAddress: "",
-      buyerName: ""
+      buyerName: "",
     };
   },
   methods: {
     sendData() {
       axios
         .post(`http://localhost:3000/create`, {
-          name: this.carModel,
-          shortDesc: this.carDescription,
+          carName: this.carModel,
           longDesc: this.carLongDescription,
           price: this.carPrice,
           img: this.carImage,
-          buyerAddress,
-          buyerName
+          buyerAddress: this.buyerAddress,
+          buyerName: this.buyerName,
         })
         .then((res) => {
           console.log(res);
@@ -46,6 +45,7 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+      this.$router.push("/");
     },
   },
 };
@@ -55,11 +55,17 @@ export default {
 .wrapper {
   display: flex;
   flex-direction: column;
+  width: 40%;
 }
 
 .form-wrapper {
   display: flex;
   flex-direction: column;
+  padding-top: 3rem;
+  padding-bottom: 2rem;
+}
+.button-create {
+  width: 35%;
 }
 </style>
 
