@@ -108,7 +108,6 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true }, (err, client
       .catch(error => console.error(error))
   })
   app.delete('/delete-car', (req, res) => {
-    console.log(req.query)
     carsCollection.findOneAndDelete(
       {
         carName: req.query.carName
@@ -116,7 +115,6 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true }, (err, client
     )
       .then(results => {
         console.log(results)
-        res.redirect('/')
       })
       .catch(error => console.error(error))
 
