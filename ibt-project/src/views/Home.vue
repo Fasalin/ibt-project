@@ -31,10 +31,10 @@ export default {
   mounted() {
     axios
       .get("http://localhost:3000/")
-      .then((resp) => {
-        this.cars = resp.data
+      .then(resp => {
+        this.cars = resp.data;
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
       });
   }
@@ -44,20 +44,19 @@ export default {
 <style scoped>
 .main-container {
   width: 80%;
-  height: 100%;
   display: flex;
   justify-content: center;
   flex-direction: column;
-  margin-top: 2rem;
 }
 .card-wrapper {
-  display: flex;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  row-gap: 5rem;
+  column-gap: 3.5rem;
 }
+
 .card {
-  width: 26%;
-  margin-bottom: 3rem;
+  width: 100%;
   background-color: whitesmoke;
 }
 
@@ -85,6 +84,7 @@ export default {
   align-items: center;
   justify-content: center;
   padding: 1rem;
+  height: 100% !important;
 }
 .card-title {
   font-size: larger;
@@ -97,6 +97,6 @@ export default {
 .main-title {
   margin: 0 auto;
   display: flex;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2.5rem;
 }
 </style>

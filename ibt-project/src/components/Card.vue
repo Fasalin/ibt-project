@@ -7,7 +7,7 @@
       <p class="card-description">
         {{ carLongDescription.slice(0, 150) }}
       </p>
-      <p class="card-price">Price: {{ carPrice }}$</p>
+      <p class="card-price">Price: {{ carPrice }} $</p>
       <router-link
         class="btn"
         :to="{
@@ -20,7 +20,7 @@
             carPrice,
             buyerAddress,
             buyerName
-          },
+          }
         }"
         >More details</router-link
       >
@@ -41,10 +41,9 @@ export default {
   ],
   data() {
     return {};
-  },
+  }
 };
 </script>
-
 
 <style scoped>
 .main-container {
@@ -53,7 +52,6 @@ export default {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  margin-top: 2rem;
 }
 .card-wrapper {
   display: flex;
@@ -61,10 +59,9 @@ export default {
   flex-wrap: wrap;
 }
 .card {
-  width: 26%;
-  margin-bottom: 3rem;
   background-color: whitesmoke;
   height: 100%;
+  border: 1px black solid;
 }
 
 .card:hover {
@@ -74,22 +71,22 @@ export default {
 .card img {
   max-width: 100%;
   max-height: 100%;
+  margin-bottom: 1rem;
 }
 .card-description {
   text-align: justify;
   margin-bottom: 1rem;
 }
 .card-border {
-  border: 1px black solid;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 1rem;
+  height: 100%;
 }
 .card-title {
   font-size: larger;
-  margin-top: 1rem;
   margin-bottom: 1rem;
 }
 .card-price {
@@ -103,7 +100,7 @@ export default {
 .btn {
   background-color: #fcdb86;
   padding: 0.5rem;
-  margin-top: 1rem;
+  margin: 1rem 1rem;
 }
 .btn:hover {
   background-color: rgb(111, 176, 219);
