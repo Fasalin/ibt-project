@@ -2,7 +2,7 @@
   <div class="wrapper">
     <h1 class="profile-title">Profile</h1>
     <div class="history" v-for="car in cars" :key="car._id">
-      <p class="car-model">Car model: {{ car.name }}</p>
+      <p class="car-model">Car model: {{ car.carName }}</p>
       <p>Bought by: {{ car.buyerName }}</p>
     </div>
   </div>
@@ -44,6 +44,6 @@ export default {
   margin-bottom: 1rem;
 }
 .wrapper{
-  width: 80%
+  width: 50%
 }
 </style>

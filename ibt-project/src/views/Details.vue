@@ -140,7 +140,7 @@ export default {
         .catch((err) => {
           console.log(err);
         });
-      this.newBuyerName = this.name;
+      //this.newBuyerName = this.name;
     },
     deleteCar() {
       axios
