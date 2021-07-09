@@ -44,7 +44,7 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true }, (err, client
         }
       }
     ).then(result => {
-      res.send(buyerName)
+      console.log(result)
       res.redirect('/')
     })
       .catch(error => console.error(error))
