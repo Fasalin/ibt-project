@@ -13,4 +13,15 @@
 Now you have both frontend and backend servers running.
 
 # Documentation
-1. API: https://app.swaggerhub.com/apis-docs/julkascript/IBT/1.0.0
+### Tech stack:
+1. Front end
+- Vue.js
+- JavaScript
+- HTML & CSS
+2. Back end
+- Express (node.js)
+- MongoDB
+
+### API
+3. https://app.swaggerhub.com/apis-docs/julkascript/IBT/1.0.0
+ 
