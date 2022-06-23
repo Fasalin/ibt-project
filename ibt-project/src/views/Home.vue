@@ -53,6 +53,7 @@ export default {
   grid-template-columns: repeat(3, 1fr);
   row-gap: 5rem;
   column-gap: 3.5rem;
+  height: 70vh;
 }
 
 .card {

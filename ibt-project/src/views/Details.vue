@@ -171,6 +171,7 @@ export default {
   align-items: center;
   justify-content: center;
   margin: 0 auto;
+  height: 80vh;
 }
 .details-container-border {
   width: 60%;
