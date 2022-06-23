@@ -63,15 +63,15 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true }, (err, client
     usersCollection.find(
       { username: req.body.username },
     ).toArray((err, users) => {
-      
+
       users.forEach(user => {
-        console.log("@@@@",user)
+        console.log("@@@@", user)
         if (req.body.username === user.username) {
           return res.sendStatus(409)
-          
+
         }
       });
-      
+
     })
     usersCollection.insertOne(
       req.body
