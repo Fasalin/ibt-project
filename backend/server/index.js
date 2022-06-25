@@ -5,6 +5,7 @@ const MongoClient = require('mongodb').MongoClient;
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 const { application } = require('express');
+const cookieParser = require('cookie-parser');
 
 // get config vars
 dotenv.config();
@@ -33,7 +34,10 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true }, (err, client
       next();
       return;
     }
+    
+
     const token = req.cookies?.jwt;
+    console.log(req.cookies)
 
     if (token == null) return res.sendStatus(401)
 
@@ -43,13 +47,13 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true }, (err, client
       next();
     })
   }
-
-
+  
   const port = 3000
   app.use(cors({
     origin: "http://localhost:8080",
     credentials: true
   }))
+  app.use(cookieParser());
   app.use(authenticateToken);
   app.use(express.json());
   app.use(express.urlencoded({
@@ -128,6 +132,7 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true }, (err, client
   });
 
   app.get('/', (req, res) => {
+    console.log("@@@@@")
     carsCollection.find().toArray()
       .then(results => {
         res.send(results)

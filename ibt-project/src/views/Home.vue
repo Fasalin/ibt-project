@@ -25,19 +25,19 @@ export default {
   components: { Card },
   data() {
     return {
-      cars: null
+      cars: null,
     };
   },
   mounted() {
     axios
-      .get("http://localhost:3000/")
-      .then(resp => {
+      .get("http://localhost:3000/", { withCredentials: true })
+      .then((resp) => {
         this.cars = resp.data;
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
-  }
+  },
 };
 </script>
 

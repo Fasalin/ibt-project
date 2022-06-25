@@ -2,6 +2,7 @@
   <div id="container">
     <nav class="navigation">
       <div class="nav-wrapper">
+        
         <router-link class="nav-home-button" to="/">Home</router-link>
         <div class="nav-right-side-buttons">
           <router-link
@@ -29,6 +30,7 @@
           >
             Profile
           </router-link>
+          <div id="username">{{}}</div>
           <!-- <router-link class="nav-profile-button" to="/">Profile</router-link> -->
         </div>
       </div>
@@ -42,6 +44,7 @@
   const { data } = await axios.get(`/jwt`);
   setJwt(data.token);
 }
+
 </script>
 
 <style>
