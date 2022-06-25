@@ -6,7 +6,7 @@
         <input v-model="username" placeholder="Username" type="text" />
         <input v-model="password" placeholder="Password" type="text" />
       </form>
-      <button class="button-create" @click="sendData">Create Profile</button>
+      <button class="button-create" @click="loginUser">Login</button>
     </div>
   </div>
 </template>
@@ -16,26 +16,32 @@ import axios from "axios";
 export default {
   data() {
     return {
-        username: "",
-        password: ""
+      username: "",
+      password: "",
     };
   },
   methods: {
     loginUser() {
       axios
-        .post(`http://localhost:3000/api/register`, {
-          username: this.username,
-          password: this.password
-        })
-        .then(res => {
+        .post(
+          `http://localhost:3000/api/login`,
+          {
+            username: this.username,
+            password: this.password,
+          },
+          {
+            withCredentials: true,
+          }
+        )
+        .then((res) => {
           console.log(res);
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
       this.$router.push("/");
-    }
-  }
+    },
+  },
 };
 </script>
 

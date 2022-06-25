@@ -21,33 +21,36 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true }, (err, client
   const reviewsCollection = db.collection('reviews')
   const usersCollection = db.collection('users')
 
-  // //middleware
-  // function authenticateToken(req, res, next) {
-  //   if (req.url === '/api/register') {
-  //     next();
-  //     return;
-  //   }
-  //   const authHeader = req.headers['authorization']
-  //   const jwt = require('jsonwebtoken');
-  //   const token = authHeader && authHeader.split(' ')[1]
+  //middleware
+  function authenticateToken(req, res, next) {
 
-  //   if (token == null) return res.sendStatus(401)
+    let unauthenticatedRoutes = [
+      '/api/register',
+      '/api/login'
+    ]
 
-  //   const secret = process.env.TOKEN_SECRET;
-  //   jwt.verify(token, secret, (err) => {
-  //     if (err) return res.sendStatus(403)
-  //     //req.user = user
-  //     next();
+    if (unauthenticatedRoutes.includes(req.url)) {
+      next();
+      return;
+    }
+    const token = req.cookies?.jwt;
 
-  //   })
-  // }
+    if (token == null) return res.sendStatus(401)
+
+    const secret = process.env.TOKEN_SECRET;
+    jwt.verify(token, secret, (err) => {
+      if (err) return res.sendStatus(403)
+      next();
+    })
+  }
+
 
   const port = 3000
   app.use(cors({
     origin: "http://localhost:8080",
     credentials: true
   }))
-  // app.use(authenticateToken);
+  app.use(authenticateToken);
   app.use(express.json());
   app.use(express.urlencoded({
     extended: true
@@ -59,8 +62,6 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true }, (err, client
 
 
   // endpoints
-
-
   app.post('/api/register', (req, res) => {
 
     //if usr not set or pass not set return bad req
@@ -91,38 +92,34 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true }, (err, client
         const token = jwt.sign(
           req.body.username,
           process.env.TOKEN_SECRET)
-        res.json(token);
+        res.json({token});
       });
 
   });
 
-  app.post('/api/login', (req, res) => {
+  app.post('/api/login', async (req, res) => {
 
-    if (req.body.username === null || req.body.password === null) {
+    if (req.body.username == null || req.body.password == null) {
       return res.status(400).json({ 'error': 'Missing username or password.' });
     }
+    console.log(req.body);
     let user = await usersCollection.findOne(
       {
         username: req.body.username,
         password: req.body.password
       },
     )
-
-    if(user !== null){
+    console.log(user);
+    if (user !== null) {
       const token = jwt.sign(
-        req.body.username,
-        process.env.TOKEN_SECRET
-      )
-      res.cookie(
-        'jwt', token, {
-        httpOnly: true,
-        secure: true,
-        maxAge: 600000,
-      }
-      )
+        user,
+        process.env.TOKEN_SECRET,
+        {expiresIn: "2h"}
+      );
+      res.cookie("jwt", token);
+     return res.redirect("/");
     }
     return res.status(400).json({ 'error': 'WRONG username or password.' });
-    //res.json(token);
   });
 
   app.get('/test', (req, res) => {
