@@ -6,6 +6,18 @@
         <div class="nav-right-side-buttons">
           <router-link
             :to="{
+              name: 'Register'
+            }"
+            >Register
+          </router-link>
+           <router-link
+            :to="{
+              name: 'Login'
+            }"
+            >Login
+          </router-link>
+          <router-link
+            :to="{
               name: 'Create'
             }"
             >Create
@@ -24,6 +36,13 @@
     <router-view />
   </div>
 </template>
+
+<script>
+  const getJwt = async () => {
+  const { data } = await axios.get(`/jwt`);
+  setJwt(data.token);
+}
+</script>
 
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap");

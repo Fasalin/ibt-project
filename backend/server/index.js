@@ -21,33 +21,33 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true }, (err, client
   const reviewsCollection = db.collection('reviews')
   const usersCollection = db.collection('users')
 
-  //middleware
-  function authenticateToken(req, res, next) {
-    if (req.url === '/api/register') {
-      next();
-      return;
-    }
-    const authHeader = req.headers['authorization']
-    const jwt = require('jsonwebtoken');
-    const token = authHeader && authHeader.split(' ')[1]
+  // //middleware
+  // function authenticateToken(req, res, next) {
+  //   if (req.url === '/api/register') {
+  //     next();
+  //     return;
+  //   }
+  //   const authHeader = req.headers['authorization']
+  //   const jwt = require('jsonwebtoken');
+  //   const token = authHeader && authHeader.split(' ')[1]
 
-    if (token == null) return res.sendStatus(401)
+  //   if (token == null) return res.sendStatus(401)
 
-    const secret = process.env.TOKEN_SECRET;
-    jwt.verify(token, secret, (err) => {
-      if (err) return res.sendStatus(403)
-      //req.user = user
-      next();
+  //   const secret = process.env.TOKEN_SECRET;
+  //   jwt.verify(token, secret, (err) => {
+  //     if (err) return res.sendStatus(403)
+  //     //req.user = user
+  //     next();
 
-    })
-  }
+  //   })
+  // }
 
   const port = 3000
   app.use(cors({
     origin: "http://localhost:8080",
     credentials: true
   }))
-  app.use(authenticateToken);
+  // app.use(authenticateToken);
   app.use(express.json());
   app.use(express.urlencoded({
     extended: true
@@ -59,38 +59,76 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true }, (err, client
 
 
   // endpoints
+
+
   app.post('/api/register', (req, res) => {
-    usersCollection.find(
+
+    //if usr not set or pass not set return bad req
+
+    if (req.body.username === null || req.body.password === null) {
+      return res.status(400).json({ 'error': 'Missing username or password.' });
+    }
+
+    //Check if uname is available if not return bad req, else crate user with
+    usersCollection.findOne(
       { username: req.body.username },
-    ).toArray((err, users) => {
-
-      users.forEach(user => {
-        console.log("@@@@", user)
-        if (req.body.username === user.username) {
-          return res.sendStatus(409)
-
-        }
-      });
-
-    })
-    usersCollection.insertOne(
-      req.body
     )
-      .then(result => console.log(result))
-      .catch(error => console.error(error))
+      .then((existingUser) => {
+        if (existingUser !== null) {
+          //Toupper
+          return res.status(400).json({ 'error': 'User already exists.' });
+        }
 
-    const token = jwt.sign(req.body.username, process.env.TOKEN_SECRET);
-    res.json(token);
+        usersCollection.insertOne(
+          {
+            "username": req.body.username,
+            "password": req.body.password
+          }
+        )
+          .then(result => console.log(result))
+          .catch(error => console.error(error))
+
+        const token = jwt.sign(
+          req.body.username,
+          process.env.TOKEN_SECRET)
+        res.json(token);
+      });
 
   });
 
   app.post('/api/login', (req, res) => {
 
-    const token = jwt.sign(req.body.username, process.env.TOKEN_SECRET);
-    res.json(token);
+    if (req.body.username === null || req.body.password === null) {
+      return res.status(400).json({ 'error': 'Missing username or password.' });
+    }
+    let user = await usersCollection.findOne(
+      {
+        username: req.body.username,
+        password: req.body.password
+      },
+    )
 
+    if(user !== null){
+      const token = jwt.sign(
+        req.body.username,
+        process.env.TOKEN_SECRET
+      )
+      res.cookie(
+        'jwt', token, {
+        httpOnly: true,
+        secure: true,
+        maxAge: 600000,
+      }
+      )
+    }
+    return res.status(400).json({ 'error': 'WRONG username or password.' });
+    //res.json(token);
   });
 
+  app.get('/test', (req, res) => {
+    console.log("TEST");
+    return res.status(400).json({ 'error': 'User already exists.' });
+  });
 
   app.get('/', (req, res) => {
     carsCollection.find().toArray()
